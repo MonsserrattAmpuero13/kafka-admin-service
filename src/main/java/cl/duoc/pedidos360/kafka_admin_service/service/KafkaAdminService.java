@@ -4,6 +4,7 @@ import cl.duoc.pedidos360.kafka_admin_service.dto.GrupoDetalle;
 import cl.duoc.pedidos360.kafka_admin_service.dto.GrupoResumen;
 import cl.duoc.pedidos360.kafka_admin_service.dto.LagGrupo;
 import cl.duoc.pedidos360.kafka_admin_service.dto.LagParticion;
+import cl.duoc.pedidos360.kafka_admin_service.dto.MiembroInfo;
 import cl.duoc.pedidos360.kafka_admin_service.dto.ParticionInfo;
 import cl.duoc.pedidos360.kafka_admin_service.dto.TopicConfigRequest;
 import cl.duoc.pedidos360.kafka_admin_service.dto.TopicDetalle;
@@ -145,11 +146,15 @@ public class KafkaAdminService {
     public GrupoDetalle describirGrupo(String groupId) {
         validarNombre(groupId);
         ConsumerGroupDescription d = esperar(admin.describeConsumerGroups(List.of(groupId)).all()).get(groupId);
-        List<String> asignadas = d.members().stream()
-                .flatMap(m -> m.assignment().topicPartitions().stream())
-                .map(tp -> tp.topic() + "-" + tp.partition())
-                .sorted().toList();
-        return new GrupoDetalle(groupId, String.valueOf(d.state()), d.members().size(), asignadas);
+        List<MiembroInfo> detalleMiembros = d.members().stream()
+                .map(m -> new MiembroInfo(m.clientId(), m.host(),
+                        m.assignment().topicPartitions().stream()
+                                .map(tp -> tp.topic() + "-" + tp.partition()).sorted().toList()))
+                .sorted(Comparator.comparing(MiembroInfo::clientId))
+                .toList();
+        List<String> asignadas = detalleMiembros.stream()
+                .flatMap(m -> m.particiones().stream()).sorted().toList();
+        return new GrupoDetalle(groupId, String.valueOf(d.state()), d.members().size(), detalleMiembros, asignadas);
     }
 
     /** Lag = ultimo offset del topico - ultimo offset confirmado por el grupo. */

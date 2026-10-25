@@ -32,7 +32,7 @@ Todos requieren `Authorization: Bearer <token>`.
 | PATCH | `/topics/{name}/partitions` | Aumenta particiones (solo se puede subir) (204) |
 | DELETE | `/topics/{name}` | Elimina el topico (204) |
 | GET | `/consumer-groups` | Lista grupos de consumidores |
-| GET | `/consumer-groups/{id}` | Estado, miembros y particiones asignadas |
+| GET | `/consumer-groups/{id}` | Estado, miembros y particiones asignadas a cada miembro |
 | GET | `/consumer-groups/{id}/lag` | Offset confirmado, ultimo offset y lag por particion |
 | DELETE | `/consumer-groups/{id}` | Elimina el grupo (solo si no tiene consumidores) |
 
