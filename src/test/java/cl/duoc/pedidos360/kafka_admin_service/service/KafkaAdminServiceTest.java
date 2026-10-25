@@ -5,7 +5,7 @@ import cl.duoc.pedidos360.kafka_admin_service.dto.TopicRequest;
 import org.apache.kafka.clients.admin.Admin;
 import org.apache.kafka.clients.admin.CreateTopicsResult;
 import org.apache.kafka.clients.admin.DeleteTopicsResult;
-import org.apache.kafka.clients.admin.IncrementalAlterConfigsResult;
+import org.apache.kafka.clients.admin.AlterConfigsResult;
 import org.apache.kafka.clients.admin.ListTopicsResult;
 import org.apache.kafka.common.KafkaFuture;
 import org.apache.kafka.common.errors.TopicExistsException;
@@ -36,7 +36,7 @@ class KafkaAdminServiceTest {
     @Mock CreateTopicsResult crearResultado;
     @Mock DeleteTopicsResult borrarResultado;
     @Mock ListTopicsResult listarResultado;
-    @Mock IncrementalAlterConfigsResult configResultado;
+    @Mock AlterConfigsResult configResultado;
 
     KafkaAdminService service;
 
