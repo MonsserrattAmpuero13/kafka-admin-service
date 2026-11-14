@@ -4,7 +4,7 @@ Microservicio de **administracion de Apache Kafka** de Pedidos360. Permite crear
 
 - Puerto: **8083**
 - Seguridad: JWT (Auth0), mismo issuer y audience que el resto del sistema
-- Cluster esperado: 3 brokers (`localhost:9092,9093,9094`), levantado con `EV1/kafka/docker-compose.kafka.yml`
+- Cluster esperado: 3 brokers (`localhost:9092,9093,9094`), levantado con `kafka/docker-compose.kafka.yml` del repositorio [pedidos360-app](https://github.com/MonsserrattAmpuero13/pedidos360-app) (los tópicos del proyecto se crean con `kafka/crear-topicos.sh` de ese mismo repositorio)
 
 ## Configuracion
 
